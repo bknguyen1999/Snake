@@ -2,11 +2,9 @@ import java.util.HashMap;
 import java.io.*;
 import java.util.Vector;
 import java.util.Arrays;
-import java.nio.file.*;
 import java.util.stream.*;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+
 
 
 
@@ -33,7 +31,7 @@ public class FindFiles {
 
     public static void find_file(String filetofind, String directory, HashMap<String, String> options, String[] extensions){
         // looks for file in current directory and does a dfs search in the subdirectories if file isnt found
-        System.out.println("=============== Looking for file in directory: " + directory + " ===============");
+        System.out.println("=============== Looking for file(s) in directory: " + directory + " ===============");
         File dir = new File(directory);
         String[] list_files_dir = dir.list();
 
@@ -43,7 +41,7 @@ public class FindFiles {
         }
 
         if (options.containsKey("-ext")){
-            copy.removeIf(f -> !check_extensions(f, extensions));
+            copy.removeIf(f -> !check_extensions(directory + "/" + f, extensions));
             if (!options.containsKey("-reg")){
                 copy.removeIf(f -> !(f.equals(filetofind)));
             }
@@ -58,7 +56,6 @@ public class FindFiles {
         }
         // by now, you should have already gotten all files in the current directory so just do a dfs on the subdirectories
         if (options.containsKey("-r")) {
-
             Vector<String> subdir = new Vector<String>(Arrays.asList(list_files_dir));
             subdir.removeIf(f -> !is_directory(directory + "/" + f));
             for (int i = 0; i < subdir.size(); i++) {
@@ -74,13 +71,13 @@ public class FindFiles {
         for(int i=1; i < args.length; i++){ // first check to see if there's a help flag
             if (args[i].equals("-help")){
                 help();
-                //return 0;
+                return;
                 //System.out.println("help");
             }
         }
         if (verify_input(args) == false){ // verify that the command line inputs are valid
             help();
-            //return 0;
+            return;
             //System.out.println("invalid input");
         }
         HashMap<String, String> options = new HashMap<String, String>();
