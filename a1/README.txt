@@ -9,7 +9,9 @@ Requirements:
 
 
 Technical Notes:
-- When -ext and -reg are both present in the command line argument, both conditions must be met for a file to be found (i.e. the file name must match the regex expression given and must end with one of the extensions provided).
+- When -ext and -reg are both present in the command line argument, both conditions must be met for a file 
+to be found (i.e. the file name must match the regex expression given and must end with one of the 
+extensions provided).
 
 ex. 
 java FindFiles "^.*\.txt$" -reg -ext "txt,pdf"
@@ -24,5 +26,6 @@ If the current directory contains files: anything.txt
 
 FindFiles will return: anything.txt, anything.txt.txt, hello.txt
 
-(See Professor Jeff Avery's answer on Piazza post @102 and the endorsed answer from post @127 for more details) 
+(See Professor Jeff Avery's answer on Piazza post @102 and the endorsed answer from 
+post @127 for more details) 
 
