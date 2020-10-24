@@ -91,12 +91,14 @@ public class Snake {
             }
             else{
                 r = new SnakeBlock("tail", "E");
+                //r.setFill(snaketail_E);
             }
             r.setTranslateX(init_head_x - (i*40));
             r.setTranslateY(init_head_y);
 
             snake_array.add(r);
         }
+        //rotateTail();
         draw();
         handle_animation();
 
@@ -154,7 +156,14 @@ public class Snake {
             rotateTail();
 
             SnakeBlock old_head = snake_array.get(1);
-            old_head.setBody(old_head.getDirection());
+            if(snake_array.size() > 2){
+                old_head.setBody(old_head.getDirection());
+            }
+            else{
+                old_head.setTail();
+                rotateTail();
+            }
+
 
             checkTurns();
 
@@ -163,8 +172,6 @@ public class Snake {
             }
         });
         timeline.getKeyFrames().add(frame);
-
-
 
     }
 
@@ -176,6 +183,7 @@ public class Snake {
         snake_container.getChildren().add(grow);
         snake_array.add(grow);
         rotateHead();
+        rotateTail();
         checkTurns();
     }
 
@@ -276,7 +284,7 @@ public class Snake {
             else if (type == "body"){
                 setBody(this.cur_dir);
             }
-            else{
+            else if (type == "tail"){
                 setTail();
             }
         }
