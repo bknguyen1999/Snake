@@ -493,7 +493,7 @@ public class GUI extends Application {
         }
         stage.setScene(curScene);
         isRunning = true;
-        Board board = new Board(this);
+        Main board = new Main(this);
         timeline.play();
     }
 }

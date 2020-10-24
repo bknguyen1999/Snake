@@ -44,7 +44,7 @@ public class Snake {
 
 
 
-    public Snake(GUI gui, Board board) {
+    public Snake(GUI gui, Main board) {
         this.gui = gui;
         this.curScene = gui.curScene;
         this.timeline = gui.timeline;
