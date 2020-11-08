@@ -24,7 +24,7 @@ public class SketchIt extends Application {
         ToolbarView tools = new ToolbarView(model, screen_width, screen_height);
         PropertiesView properties = new PropertiesView(model, screen_width, screen_height);
         CanvasView canvas = new CanvasView(model, screen_width, screen_height);
-        Menu menu = new Menu(model, screen_width, screen_height);
+        MenuView menu = new MenuView(model, screen_width, screen_height, stage, canvas);
 
         VBox vbox = new VBox();
         vbox.getChildren().addAll(tools, properties);
@@ -43,12 +43,11 @@ public class SketchIt extends Application {
         gp.setHgrow(menu, Priority.ALWAYS);
         gp.setVgrow(menu, Priority.ALWAYS);
 
-        //main.setMinHeight(screen_height * 0.3);
-        //main.setMinWidth(screen_width * 0.3);
+        stage.setMinWidth(640);
+        stage.setMinHeight(480);
 
 
         Scene scene = new Scene(main, screen_width, screen_height);
-        model.setScene(scene);
 
         stage.setScene(scene);
         stage.show();
