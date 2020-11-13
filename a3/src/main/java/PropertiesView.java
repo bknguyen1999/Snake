@@ -1,12 +1,12 @@
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -37,7 +37,6 @@ public class PropertiesView extends GridPane implements IView {
     CheckBox fill_shape = new CheckBox("Fill Shape When Drawn");
     Button thickness_selected = thickness2_button;
     Button style_selected = style1;
-    //HBox thickness_hbox_shape;
     HBox thickness_hbox;
     double thickness1 = 1;
     double thickness2 = 3;
@@ -49,16 +48,15 @@ public class PropertiesView extends GridPane implements IView {
     double dash3 = 6d;
     double dash4 = 4d;
     double dash5 = 3d;
-    DropShadow ds = new DropShadow();
+    InnerShadow innerShadow;
 
 
-    public PropertiesView(Model model, double screen_width, double screen_height){
+    public PropertiesView(Model model, double screen_width, double screen_height) {
         super();
         this.model = model;
-        this.default_width = screen_width * 0.2;
-        this.default_height = screen_height * 0.39;
-        setStyle(bg_color);
-        setPrefSize(this.default_width, this.default_height);
+        this.default_width = screen_width * 0.15;
+        this.default_height = screen_height * 0.49;
+
         this.model.addView(this);
         model.line_thickness = thickness2;
         model.line_style = dash1;
@@ -68,7 +66,15 @@ public class PropertiesView extends GridPane implements IView {
 
     }
 
-    private void setLayout(){
+    private void setLayout() {
+        setStyle(bg_color);
+        setPrefSize(this.default_width, this.default_height);
+        innerShadow = new InnerShadow();
+        innerShadow.setColor(Color.RED);
+        innerShadow.setHeight(25);
+        innerShadow.setRadius(12);
+        innerShadow.setWidth(20);
+        innerShadow.setChoke(0.5);
         Color default_line = Color.BLACK;
         Color default_fill = Color.YELLOW;
         Label line_color_label = new Label("Line Color");
@@ -82,38 +88,35 @@ public class PropertiesView extends GridPane implements IView {
         Label thickness_label = new Label("Line Thickness");
         thickness_label.setFont(Font.font("Verdana", FontWeight.BOLD, 13));
         thickness_label.setAlignment(Pos.CENTER);
-//        thickness1_button = new Button();
-//        thickness2_button = new Button();
-//        thickness3_button = new Button();
-//        thickness4_button = new Button();
-//        thickness5_button = new Button();
+
+
+        Separator separator1 = new Separator();
+        separator1.setOrientation(Orientation.HORIZONTAL);
+
         Label style_label = new Label("Line Style");
         style_label.setFont(Font.font("Verdana", FontWeight.BOLD, 13));
-        //style_label.setStyle("-fx-font-weight: bold");
-//        style1 = new Button();
-//        style2 = new Button();
-//        style3 = new Button();
-//        style4 = new Button();
-//        style5 = new Button();
-        
-        Line t1 = new Line(0,20,20,0);
+
+
+        Line t1 = new Line(0, 20, 20, 0);
         t1.setStrokeWidth(thickness1);
         thickness1_button.setGraphic(t1);
-        Line t2 = new Line(0,20,20,0);
+        Line t2 = new Line(0, 20, 20, 0);
         t2.setStrokeWidth(thickness2);
         thickness2_button.setGraphic(t2);
-        Line t3 = new Line(0,20,20,0);
+        Line t3 = new Line(0, 20, 20, 0);
         t3.setStrokeWidth(thickness3);
         thickness3_button.setGraphic(t3);
-        Line t4 = new Line(0,20,20,0);
+        Line t4 = new Line(0, 20, 20, 0);
         t4.setStrokeWidth(thickness4);
         thickness4_button.setGraphic(t4);
-        Line t5 = new Line(0,20,20,0);
+        Line t5 = new Line(0, 20, 20, 0);
         t5.setStrokeWidth(thickness5);
         thickness5_button.setGraphic(t5);
 
+        Separator separator2 = new Separator();
+        separator2.setOrientation(Orientation.HORIZONTAL);
+
         Line s1 = new Line(0, 20, 20, 0);
-        //s1.getStrokeDashArray().add(dash1);
         style1.setGraphic(s1);
         Line s2 = new Line(0, 20, 20, 0);
         s2.getStrokeDashArray().add(dash2);
@@ -127,190 +130,181 @@ public class PropertiesView extends GridPane implements IView {
         Line s5 = new Line(0, 20, 20, 0);
         s5.getStrokeDashArray().add(dash5);
         style5.setGraphic(s5);
-        
+
         HBox color_label_hbox = new HBox();
         color_label_hbox.getChildren().addAll(line_color_label, fill_color_label);
         color_label_hbox.setSpacing(55);
-        
-        
+
+
         HBox color_picker_hbox = new HBox();
         color_picker_hbox.getChildren().addAll(line_color, fill_color);
-        
+
         thickness_hbox = new HBox();
         no_border.setFont(Font.font("Verdana", 10));
         thickness_hbox.getChildren().addAll(no_border, thickness1_button, thickness2_button, thickness3_button, thickness4_button, thickness5_button);
-        //no_border.setPrefSize(40,20);
-        //thickness_hbox_shape = new HBox();
-        //thickness_hbox_shape.getChildren().addAll(no_border, thickness1_button, thickness2_button, thickness3_button, thickness4_button, thickness5_button);
-        
+
         HBox style_hbox = new HBox();
         style_hbox.getChildren().addAll(style1, style2, style3, style4, style5);
         add(color_label_hbox, 0, 0);
-        
 
         add(color_picker_hbox, 0, 1, 2, 1);
         add(fill_shape, 0, 2);
-        add(thickness_label, 0, 3, 4, 1);
 
-        add(thickness_hbox, 0, 4);
-        add(style_label, 0, 5);
+        add(separator1, 0, 3);
 
-        add(style_hbox, 0, 6);
-        setVgap(10);
+        add(thickness_label, 0, 4, 4, 1);
+        add(thickness_hbox, 0, 5);
+
+        add(separator2, 0, 6);
+
+        add(style_label, 0, 7);
+        add(style_hbox, 0, 8);
+
+        setVgap(15);
+        setPadding(new Insets(5, 0, 0,5));
 
     }
 
-    private void registerController(){
+    private void registerController() {
         line_color.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
-                if(model.selected_shape != null){
-                    model.selected_shape.setStroke(line_color.getValue());
-                }
                 model.line_color = line_color.getValue();
+                if (model.selected_shape != null) {
+                    model.setStrokeColor(model.selected_shape);
+                }
+                //model.line_color = line_color.getValue();
                 updateView();
-                //System.out.println("New Color's RGB = "+c.getRed()+" "+c.getGreen()+" "+c.getBlue());
             }
         });
 
         fill_color.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
-                if(model.selected_shape != null){
-                    model.selected_shape.setFill(fill_color.getValue());
-                }
                 model.fill_color = fill_color.getValue();
+                if (model.selected_shape != null) {
+                    model.fillShape(model.selected_shape);
+                }
+                //model.fill_color = fill_color.getValue();
                 updateView();
-                //System.out.println("New Color's RGB = "+c.getRed()+" "+c.getGreen()+" "+c.getBlue());
             }
         });
         no_border.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(model.selected_shape != null && model.selected_shape.getFill() != Color.TRANSPARENT){
-                    model.selected_shape.setStroke(null);
-
-                }
-                model.line_color = null;
                 model.line_thickness = -1;
                 thickness_selected = no_border;
+                if (model.selected_shape != null && model.selected_shape.getFill() != Color.TRANSPARENT) {
+                    model.removeShapeBorder(model.selected_shape);
+                }
                 updateView();
             }
         });
         thickness1_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(model.selected_shape != null){
-                    model.selected_shape.setStroke(model.line_color);
-                    model.selected_shape.setStrokeWidth(thickness1);
-                }
                 model.line_thickness = thickness1;
                 thickness_selected = thickness1_button;
+                if (model.selected_shape != null) {
+                    model.setShapeStrokeWidth(model.selected_shape);
+                }
                 updateView();
             }
         });
         thickness2_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(model.selected_shape != null){
-                    model.selected_shape.setStroke(model.line_color);
-                    model.selected_shape.setStrokeWidth(thickness2);
-                }
                 model.line_thickness = thickness2;
                 thickness_selected = thickness2_button;
+                if (model.selected_shape != null) {
+                    model.setShapeStrokeWidth(model.selected_shape);
+                }
                 updateView();
             }
         });
         thickness3_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(model.selected_shape != null){
-                    model.selected_shape.setStroke(model.line_color);
-                    model.selected_shape.setStrokeWidth(thickness3);
-                }
                 model.line_thickness = thickness3;
                 thickness_selected = thickness3_button;
+                if (model.selected_shape != null) {
+                    model.setShapeStrokeWidth(model.selected_shape);
+                }
                 updateView();
             }
         });
         thickness4_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(model.selected_shape != null){
-                    model.selected_shape.setStroke(model.line_color);
-                    model.selected_shape.setStrokeWidth(thickness4);
-                }
                 model.line_thickness = thickness4;
                 thickness_selected = thickness4_button;
+                if (model.selected_shape != null) {
+                    model.setShapeStrokeWidth(model.selected_shape);
+                }
                 updateView();
             }
         });
         thickness5_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(model.selected_shape != null){
-                    model.selected_shape.setStroke(model.line_color);
-                    model.selected_shape.setStrokeWidth(thickness5);
-                }
                 model.line_thickness = thickness5;
                 thickness_selected = thickness5_button;
+                if (model.selected_shape != null) {
+                    model.setShapeStrokeWidth(model.selected_shape);
+                }
                 updateView();
             }
         });
         style1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (model.selected_shape != null){
-                    model.selected_shape.getStrokeDashArray().clear();
-                }
                 model.line_style = dash1;
                 style_selected = style1;
+                if (model.selected_shape != null) {
+                    model.setShapeStrokeStyle(model.selected_shape);
+                }
                 updateView();
             }
         });
         style2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (model.selected_shape != null){
-                    model.selected_shape.getStrokeDashArray().clear();
-                    model.selected_shape.getStrokeDashArray().add(dash2);
-                }
                 model.line_style = dash2;
                 style_selected = style2;
+                if (model.selected_shape != null) {
+                    model.setShapeStrokeStyle(model.selected_shape);
+                }
                 updateView();
             }
         });
         style3.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (model.selected_shape != null){
-                    model.selected_shape.getStrokeDashArray().clear();
-                    model.selected_shape.getStrokeDashArray().add(dash3);
-                }
                 model.line_style = dash3;
                 style_selected = style3;
+                if (model.selected_shape != null) {
+                    model.setShapeStrokeStyle(model.selected_shape);
+                }
                 updateView();
             }
         });
         style4.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (model.selected_shape != null){
-                    model.selected_shape.getStrokeDashArray().clear();
-                    model.selected_shape.getStrokeDashArray().add(dash4);
-                }
                 model.line_style = dash4;
                 style_selected = style4;
+                if (model.selected_shape != null) {
+                    model.setShapeStrokeStyle(model.selected_shape);
+                }
                 updateView();
             }
         });
         style5.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (model.selected_shape != null){
-                    model.selected_shape.getStrokeDashArray().clear();
-                    model.selected_shape.getStrokeDashArray().add(dash5);
-                }
                 model.line_style = dash5;
                 style_selected = style5;
+                if (model.selected_shape != null) {
+                    model.setShapeStrokeStyle(model.selected_shape);
+                }
                 updateView();
             }
         });
@@ -325,118 +319,164 @@ public class PropertiesView extends GridPane implements IView {
 
     @Override
     public void updateView() {
-        
+
         // check if the selected shape has a fill colour or not
-        if(model.selected_shape != null && model.selected_tool == Model.Tool.SELECT){
-            if(model.selected_shape.getFill() == Color.TRANSPARENT || model.selected_shape.getFill() == null){
-                // when the shape has no fill color or the selected shape is a line
-                no_border.setDisable(true);
-            }
-            else{
-                no_border.setDisable(false);
-            }
-        }
-        else if(model.selected_tool == Model.Tool.LINE){
-            no_border.setDisable(true);
-        }
-        else{
-            no_border.setDisable(false);
-        }
-        
-        if(model.selected_tool == Model.Tool.LINE && thickness_selected == no_border){
-            model.line_thickness = thickness1;
-            thickness_selected = thickness1_button;
-        }
-        
-        if (model.line_thickness == -1){
+
+        if (model.line_thickness == -1) {
             thickness_selected = no_border;
-        }
-        else if (model.line_thickness == thickness1){
+        } else if (model.line_thickness == thickness1) {
             thickness_selected = thickness1_button;
-        }
-        else if (model.line_thickness == thickness2){
+        } else if (model.line_thickness == thickness2) {
             thickness_selected = thickness2_button;
-        }
-        else if (model.line_thickness == thickness3){
+        } else if (model.line_thickness == thickness3) {
             thickness_selected = thickness3_button;
-        }
-        else if (model.line_thickness == thickness4){
+        } else if (model.line_thickness == thickness4) {
             thickness_selected = thickness4_button;
-        }
-        else if (model.line_thickness == thickness5){
+        } else if (model.line_thickness == thickness5) {
             thickness_selected = thickness5_button;
         }
 
-        if(model.line_color == null){
-            thickness1_button.setDisable(true);
-            thickness2_button.setDisable(true);
-            thickness3_button.setDisable(true);
-            thickness4_button.setDisable(true);
-            thickness5_button.setDisable(true);
-        }
-        else{
-            thickness1_button.setDisable(false);
-            thickness2_button.setDisable(false);
-            thickness3_button.setDisable(false);
-            thickness4_button.setDisable(false);
-            thickness5_button.setDisable(false);
-        }
 
-        if (thickness_selected == no_border){
+        if (thickness_selected == no_border) {
             style1.setDisable(true);
             style2.setDisable(true);
             style3.setDisable(true);
             style4.setDisable(true);
             style5.setDisable(true);
+            line_color.setDisable(true);
             fill_shape.setDisable(true);
-        }
-        else{
+        } else {
             style1.setDisable(false);
             style2.setDisable(false);
             style3.setDisable(false);
             style4.setDisable(false);
             style5.setDisable(false);
+            line_color.setDisable(false);
             fill_shape.setDisable(false);
         }
 
-        no_border.setStyle(null);
-        thickness1_button.setStyle(null);
-        thickness2_button.setStyle(null);
-        thickness3_button.setStyle(null);
-        thickness4_button.setStyle(null);
-        thickness5_button.setStyle(null);
-        thickness_selected.setStyle("-fx-background-color:red;");
+        no_border.setEffect(null);
+        thickness1_button.setEffect(null);
+        thickness2_button.setEffect(null);
+        thickness3_button.setEffect(null);
+        thickness4_button.setEffect(null);
+        thickness5_button.setEffect(null);
+        thickness_selected.setEffect(innerShadow);
         //thickness_selected.setEffect(ds);
-        
-        
-        if(model.line_style == dash1){
+
+
+        if (model.line_style == dash1) {
             style_selected = style1;
-        }
-        else if(model.line_style == dash2){
+        } else if (model.line_style == dash2) {
             style_selected = style2;
-        }
-        else if(model.line_style == dash3){
+        } else if (model.line_style == dash3) {
             style_selected = style3;
-        }
-        else if(model.line_style == dash4){
+        } else if (model.line_style == dash4) {
             style_selected = style4;
-        }
-        else if(model.line_style == dash5){
+        } else if (model.line_style == dash5) {
             style_selected = style5;
         }
-        style1.setStyle(null);
-        style2.setStyle(null);
-        style3.setStyle(null);
-        style4.setStyle(null);
-        style5.setStyle(null);
-        style_selected.setStyle("-fx-background-color:red;");
+        style1.setEffect(null);
+        style2.setEffect(null);
+        style3.setEffect(null);
+        style4.setEffect(null);
+        style5.setEffect(null);
+        style_selected.setEffect(innerShadow);
         //style_selected.setEffect(ds);
-        
+
         fill_color.setValue(model.fill_color);
         line_color.setValue(model.line_color);
-        
-        
-        
-        
+
+
+
+        if (model.selected_tool == Model.Tool.SELECT) {
+            activateAllButtons();
+            if (model.selected_shape != null) {
+                fill_shape.setDisable(true);
+                if (model.selected_shape.getFill() == Color.TRANSPARENT || model.selected_shape.getFill() == null) {
+                    // when the shape has no fill color or the selected shape is a line
+                    no_border.setDisable(true);
+                } else {
+                    no_border.setDisable(false);
+                }
+                if(thickness_selected == no_border){
+                    style1.setDisable(true);
+                    style2.setDisable(true);
+                    style3.setDisable(true);
+                    style4.setDisable(true);
+                    style5.setDisable(true);
+                }
+                else{
+                    style1.setDisable(false);
+                    style2.setDisable(false);
+                    style3.setDisable(false);
+                    style4.setDisable(false);
+                    style5.setDisable(false);
+                }
+            } else {
+                activateAllButtons();
+            }
+        }
+        else if (model.selected_tool == Model.Tool.ERASE){
+            deactivateAllButtons();
+        }
+        else if (model.selected_tool == Model.Tool.LINE) {
+            activateAllButtons();
+            fill_color.setDisable(true);
+            fill_shape.setDisable(true);
+            no_border.setDisable(true);
+            if (thickness_selected == no_border) {
+                model.line_thickness = thickness1;
+                thickness_selected = thickness1_button;
+            }
+            if (line_color.getValue() == null) {
+                line_color.setValue(Color.BLACK);
+                model.line_color = Color.BLACK;
+            }
+        }
+        else if (model.selected_tool == Model.Tool.FILL){
+            deactivateAllButtons();
+            fill_color.setDisable(false);
+        }
+        else { // shape (circle or rectangle)
+            activateAllButtons();
+        }
+
+
+    }
+
+
+    private void activateAllButtons(){
+        line_color.setDisable(false);
+        fill_color.setDisable(false);
+        fill_shape.setDisable(false);
+        no_border.setDisable(false);
+        thickness1_button.setDisable(false);
+        thickness2_button.setDisable(false);
+        thickness3_button.setDisable(false);
+        thickness4_button.setDisable(false);
+        thickness5_button.setDisable(false);
+        style1.setDisable(false);
+        style2.setDisable(false);
+        style3.setDisable(false);
+        style4.setDisable(false);
+        style5.setDisable(false);
+    }
+
+    private void deactivateAllButtons(){
+        line_color.setDisable(true);
+        fill_color.setDisable(true);
+        fill_shape.setDisable(true);
+        no_border.setDisable(true);
+        thickness1_button.setDisable(true);
+        thickness2_button.setDisable(true);
+        thickness3_button.setDisable(true);
+        thickness4_button.setDisable(true);
+        thickness5_button.setDisable(true);
+        style1.setDisable(true);
+        style2.setDisable(true);
+        style3.setDisable(true);
+        style4.setDisable(true);
+        style5.setDisable(true);
     }
 }

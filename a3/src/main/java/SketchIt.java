@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -44,13 +45,15 @@ public class SketchIt extends Application {
         gp.setVgrow(menu, Priority.ALWAYS);
 
         stage.setMinWidth(640);
-        stage.setMinHeight(480);
+        stage.setMinHeight(670);
 
 
         Scene scene = new Scene(main, screen_width, screen_height);
+        model.setScene(scene);
 
         stage.setScene(scene);
         stage.show();
+
 
 
 

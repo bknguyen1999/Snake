@@ -20,8 +20,6 @@ public class CanvasView extends Pane implements IView{
     static double default_width;
     static double default_height;
     ArrayList<Shape> temps = new ArrayList<Shape>();
-    //Canvas canvas;
-    //GraphicsContext gc;
     Pane canvas;
     Rectangle rect;
     Ellipse circle;
@@ -33,20 +31,21 @@ public class CanvasView extends Pane implements IView{
     public CanvasView(Model model, double screen_width, double screen_height){
         super();
         this.model = model;
-        default_width = screen_width * 0.8;
+        default_width = screen_width * 0.85;
         default_height = screen_height * 0.98;
-        canvas = new Pane();
-        canvas.setPrefSize(default_width, default_height);
-        canvas.setStyle("-fx-background-color:white;");
-//        gc = canvas.getGraphicsContext2D();
-        getChildren().add(canvas);
-        //setStyle("-fx-background-color:green;");
-        setPrefSize(default_width, default_height);
-        //setWidth(default_width);
-        //setHeight(default_height);
+
+        setLayout();
         this.model.addView(this);
         registerController();
-        registerKeyboardControls();
+
+    }
+
+    private void setLayout(){
+        canvas = new Pane();
+        canvas.setPrefSize(default_width, default_height);
+        canvas.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
+        getChildren().add(canvas);
+        setPrefSize(default_width, default_height);
     }
 
     private void registerController(){
@@ -57,8 +56,6 @@ public class CanvasView extends Pane implements IView{
                     initX = event.getX();
                     initY = event.getY();
                     rect = new Rectangle(initX, initY, 0, 0);
-//                    rect.setFill(Color.TRANSPARENT);
-//                    rect.setStroke(model.line_color);
                     if(model.fill_shape){
                         rect.setFill(model.fill_color);
                     }
@@ -78,13 +75,13 @@ public class CanvasView extends Pane implements IView{
                     }
                     model.configureShape(rect);
                     getChildren().add(rect);
+                    model.saved = false;
                 }
                 else if (model.selected_tool == Model.Tool.CIRCLE){
                     initX = event.getX();
                     initY = event.getY();
                     circle = new Ellipse(initX, initY, 0, 0);
-//                    circle.setFill(Color.TRANSPARENT);
-//                    circle.setStroke(model.line_color);
+
                     if (model.fill_shape){
                         circle.setFill(model.fill_color);
                     }
@@ -103,6 +100,7 @@ public class CanvasView extends Pane implements IView{
                     }
                     model.configureShape(circle);
                     getChildren().add(circle);
+                    model.saved = false;
                 }
                 else if (model.selected_tool == Model.Tool.LINE){
                     initX = event.getX();
@@ -115,6 +113,7 @@ public class CanvasView extends Pane implements IView{
                     }
                     model.configureShape(line);
                     getChildren().add(line);
+                    model.saved = false;
                 }
                 else{
                     return;
@@ -185,54 +184,24 @@ public class CanvasView extends Pane implements IView{
                     model.deselectShape();
                 }
                 if (model.selected_tool == Model.Tool.FILL){
+                    model.saved = false;
                     canvas.setBackground(new Background(new BackgroundFill(model.fill_color, null, null)));
+
                 }
             }
         });
 
     }
 
-    // SHITS NOT WORKING
-    private void registerKeyboardControls(){
-        System.out.println("in register keyboard controls");
-        this.setOnKeyPressed(ke -> {
-            KeyCode keyCode = ke.getCode();
-            System.out.println(keyCode.toString());
-            if (model.selected_tool == Model.Tool.SELECT){
-                if (keyCode.equals(KeyCode.BACK_SPACE) && model.selected_shape != null){
-                    System.out.println("pressed delete on selected shape");
-                    model.deleteSelectedShape();
-                }
-            }
-            else if (keyCode.equals(KeyCode.ESCAPE)){
-                model.deselectShape();
-            }
-        });
+
+    public void newCanvas(){
+        getChildren().clear();
+        canvas = new Pane();
+        canvas.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
+        canvas.setPrefSize(default_width, default_height);
+        getChildren().add(canvas);
+        registerController();
     }
-
-//    public boolean isClick_on_canvas(MouseEvent event) {
-//        for (int i = 0; i < model.shapes.size(); i++){
-//            Shape s = model.shapes.get(i);
-//
-//        }
-//
-//    }
-
-
-
-//    public void updateViewDragged(Shape shape){
-//        temps.add(shape);
-//        drawRectangle((Rectangle)shape);
-//        getChildren().add(shape);
-//    }
-//
-//    public void clearTemps(){
-//        //System.out.println("in clear temps");
-//        for (Shape s: this.temps){
-//            getChildren().remove(s);
-//        }
-//        temps.clear();
-//    }
 
 
     @Override

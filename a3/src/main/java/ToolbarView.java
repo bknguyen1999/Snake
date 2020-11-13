@@ -1,13 +1,19 @@
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 import javax.tools.Tool;
 
@@ -23,13 +29,34 @@ public class ToolbarView extends GridPane implements IView {
     Button circle;
     Button rectangle;
     Button fill;
+    InnerShadow innerShadow;
 
     public ToolbarView(Model model, double screen_width, double screen_height){
         super();
         this.model = model;
-        this.default_width = screen_width * 0.2;
-        this.default_height = screen_height * 0.59;
+        this.default_width = screen_width * 0.15;
+        this.default_height = screen_height * 0.49;
+
+        setLayout();
+        this.model.addView(this);
+        updateView();
+        registerController();
+
+    }
+
+    private void setLayout(){
         setStyle(bg_color);
+        setMinWidth(default_width);
+        innerShadow = new InnerShadow();
+        innerShadow.setColor(Color.RED);
+        innerShadow.setHeight(25);
+        innerShadow.setRadius(12);
+        innerShadow.setWidth(20);
+        innerShadow.setChoke(0.5);
+        Label tools_label = new Label("Tools");
+        tools_label.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        tools_label.setUnderline(true);
+        //tools_label.setPadding(new Insets(5,0,0,0));
         select = new Button();
         erase = new Button();
         line = new Button();
@@ -37,85 +64,94 @@ public class ToolbarView extends GridPane implements IView {
         rectangle = new Button();
         fill = new Button();
         Rectangle rec = new Rectangle(60,54);
+        rec.setStroke(Color.BLACK);
+        rec.setStrokeWidth(3);
+        rec.setFill(Color.TRANSPARENT);
         rectangle.setGraphic(rec);
-        Line l = new Line(0,54,60,0);
+        Line l = new Line(0,54,58,0);
+        l.setStrokeWidth(3);
         line.setGraphic(l);
         Ellipse c = new Ellipse(0,0,28.5,28.5);
+        c.setStroke(Color.BLACK);
+        c.setStrokeWidth(3);
+        c.setFill(Color.TRANSPARENT);
         circle.setGraphic(c);
         fill.setGraphic(new ImageView(new Image("file:src/main/resources/fill2.png")));
         erase.setGraphic(new ImageView(new Image("file:src/main/resources/eraser.png")));
         select.setGraphic(new ImageView(new Image("file:src/main/resources/select.png")));
-        add(select, 0, 0);
-        add(erase, 1, 0);
-        add(line, 0, 1);
-        add(circle, 1, 1);
-        add(rectangle, 0, 2);
-        add(fill, 1, 2);
+        add(tools_label, 0, 0, 2, 1);
+        add(select, 0, 1);
+        add(erase, 1, 1);
+        add(line, 0, 2);
+        add(circle, 1, 2);
+        add(rectangle, 0, 3);
+        add(fill, 1, 3);
         setPrefSize(this.default_width, this.default_height);
+        //tools_label.setAlignment(Pos.CENTER);
+        setHalignment(tools_label, HPos.CENTER);
+        setAlignment(Pos.TOP_CENTER);
+
 
         setHgap(50);
-        setVgap(50);
-        this.model.addView(this);
-        updateView();
-        toolbar_input();
-
+        setVgap(30);
+        //setPadding(new Insets(0,0,0,5));
     }
 
 
     @Override
     public void updateView() {
         if (model.selected_tool == Model.Tool.RECTANGLE){
-            rectangle.setStyle("-fx-background-color:red;");
-            erase.setStyle(null);
-            line.setStyle(null);
-            circle.setStyle(null);
-            select.setStyle(null);
-            fill.setStyle(null);
+            rectangle.setEffect(innerShadow);
+            erase.setEffect(null);
+            line.setEffect(null);
+            circle.setEffect(null);
+            select.setEffect(null);
+            fill.setEffect(null);
         }
         else if (model.selected_tool == Model.Tool.CIRCLE){
-            circle.setStyle("-fx-background-color:red;");
-            erase.setStyle(null);
-            line.setStyle(null);
-            select.setStyle(null);
-            rectangle.setStyle(null);
-            fill.setStyle(null);
+            circle.setEffect(innerShadow);
+            erase.setEffect(null);
+            line.setEffect(null);
+            select.setEffect(null);
+            rectangle.setEffect(null);
+            fill.setEffect(null);
         }
         else if (model.selected_tool == Model.Tool.SELECT){
-            select.setStyle("-fx-background-color:red;");
-            erase.setStyle(null);
-            line.setStyle(null);
-            circle.setStyle(null);
-            rectangle.setStyle(null);
-            fill.setStyle(null);
+            select.setEffect(innerShadow);
+            erase.setEffect(null);
+            line.setEffect(null);
+            circle.setEffect(null);
+            rectangle.setEffect(null);
+            fill.setEffect(null);
         }
         else if (model.selected_tool == Model.Tool.LINE){
-            line.setStyle("-fx-background-color:red;");
-            erase.setStyle(null);
-            select.setStyle(null);
-            circle.setStyle(null);
-            rectangle.setStyle(null);
-            fill.setStyle(null);
+            line.setEffect(innerShadow);
+            erase.setEffect(null);
+            select.setEffect(null);
+            circle.setEffect(null);
+            rectangle.setEffect(null);
+            fill.setEffect(null);
         }
         else if (model.selected_tool == Model.Tool.ERASE){
-            erase.setStyle("-fx-background-color:red;");
-            select.setStyle(null);
-            line.setStyle(null);
-            circle.setStyle(null);
-            rectangle.setStyle(null);
-            fill.setStyle(null);
+            erase.setEffect(innerShadow);
+            select.setEffect(null);
+            line.setEffect(null);
+            circle.setEffect(null);
+            rectangle.setEffect(null);
+            fill.setEffect(null);
         }
         else if (model.selected_tool == Model.Tool.FILL){
-            fill.setStyle("-fx-background-color:red;");
-            erase.setStyle(null);
-            line.setStyle(null);
-            circle.setStyle(null);
-            rectangle.setStyle(null);
-            select.setStyle(null);
+            fill.setEffect(innerShadow);
+            erase.setEffect(null);
+            line.setEffect(null);
+            circle.setEffect(null);
+            rectangle.setEffect(null);
+            select.setEffect(null);
         }
 
     }
 
-    private void toolbar_input(){
+    private void registerController(){
         this.select.setOnAction(event -> {model.change_tool(Model.Tool.SELECT);});
         this.erase.setOnAction(event -> {model.change_tool(Model.Tool.ERASE);});
         this.line.setOnAction(event -> {model.change_tool(Model.Tool.LINE);});
