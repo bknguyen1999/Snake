@@ -1,9 +1,14 @@
 import javafx.event.EventHandler;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.shape.Rectangle;
+
+
 
 
 public class CanvasView extends Pane implements IView{
@@ -16,6 +21,7 @@ public class CanvasView extends Pane implements IView{
     Line line;
     double initX;
     double initY;
+    //Image fill_cursor = new Image("file:src/main/resources/fill_cursor.png");
 
 
     public CanvasView(Model model, double screen_width, double screen_height){
@@ -196,7 +202,12 @@ public class CanvasView extends Pane implements IView{
 
     @Override
     public void updateView() {
-        return;
+        if (model.selected_tool == Model.Tool.RECTANGLE || model.selected_tool == Model.Tool.CIRCLE || model.selected_tool == Model.Tool.LINE){
+            setCursor(Cursor.CROSSHAIR);
+        }
+        else {
+            setCursor(Cursor.DEFAULT);
+        }
     }
 
 

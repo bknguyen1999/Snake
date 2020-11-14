@@ -1,4 +1,6 @@
 import javafx.event.EventHandler;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
@@ -86,6 +88,7 @@ public class Model {
     public void change_tool(Tool tool){
         deselectShape();
         this.selected_tool = tool;
+        updateCanvasView();
         updateToolbarView();
         updatePropertiesView();
     }
@@ -236,6 +239,7 @@ public class Model {
     public void newFile(){
         shapes.clear();
         setDefaultValues();
+        updateCanvasView();
         updateToolbarView();
         updatePropertiesView();
     }
