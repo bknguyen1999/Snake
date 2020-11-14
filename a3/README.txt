@@ -22,13 +22,13 @@ Some extra features I decided to implement:
   simplify the process of removing the fill colour of the selected shape (instead of having to go into the
   colour picker and choosing the Transparent colour).
 
-- There is an extra button in the "Line Thickness" section called "No Border" which allows you to draw
+- There is an extra button in the "Line Thickness" section called "None" which allows you to draw
   a Rectangle or a Circle without the black border IF the fill colour is not transparent (it wouldn't
   make sense to draw a transparent shape with no border).
   This button also allows you to remove the border on the selected shape.
   This button is disabled when the selected tool is a Line and when the selected shape has a transparent
   fill colour.
-  When "No Border" is selected, all of the line styles are disabled as well since there is no border to style.
+  When "None" is selected, all of the line styles are disabled as well since there is no border to style.
 
 
 Sources for the images used:
