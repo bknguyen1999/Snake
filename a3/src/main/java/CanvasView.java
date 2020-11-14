@@ -1,25 +1,15 @@
 import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
-
-import java.awt.*;
-import java.util.ArrayList;
 
 
 public class CanvasView extends Pane implements IView{
     Model model;
     static double default_width;
     static double default_height;
-    ArrayList<Shape> temps = new ArrayList<Shape>();
     Pane canvas;
     Rectangle rect;
     Ellipse circle;
@@ -31,7 +21,7 @@ public class CanvasView extends Pane implements IView{
     public CanvasView(Model model, double screen_width, double screen_height){
         super();
         this.model = model;
-        default_width = screen_width * 0.85;
+        default_width = screen_width * 0.82;
         default_height = screen_height * 0.98;
 
         setLayout();
@@ -206,32 +196,7 @@ public class CanvasView extends Pane implements IView{
 
     @Override
     public void updateView() {
-//        if (model.selected_tool == Model.Tool.CIRCLE || model.selected_tool == Model.Tool.RECTANGLE){
-//            Shape s = model.shapes.get(model.shapes.size()-1);
-//            //getChildren().add(s);
-//            drawRectangle((Rectangle)s);
-//            getChildren().add(s);
-//        }
-//        else if (model.selected_tool == Model.Tool.SELECT){
-//            Shape ss = null;
-//            for (Shape s: this.model.shapes){
-//                if (s == this.model.selected_shape){
-//                    ss = s;
-//                }
-//                else{
-//                    s.setStroke(Color.BLACK);
-//                    //s.getStrokeDashArray().addAll();
-//                }
-//            }
-//            if (ss != null){
-//                ss.setStrokeDashOffset(10);
-//                ss.setStroke(Color.BLUE);
-//                //ss.getStrokeDashArray().addAll(80.0, 70.0, 60.0, 50.0, 40.0);
-//            }
-
-
-//        }
-
+        return;
     }
 
 

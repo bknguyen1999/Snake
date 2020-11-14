@@ -1,25 +1,24 @@
 import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import javax.tools.Tool;
-
 
 public class ToolbarView extends GridPane implements IView {
-    String bg_color = "-fx-background-color:orange;";
+    //String bg_color = "-fx-background-color:orange;";
     double default_width;
     double default_height;
     Model model;
@@ -34,8 +33,8 @@ public class ToolbarView extends GridPane implements IView {
     public ToolbarView(Model model, double screen_width, double screen_height){
         super();
         this.model = model;
-        this.default_width = screen_width * 0.15;
-        this.default_height = screen_height * 0.49;
+        this.default_width = screen_width * 0.18;
+        this.default_height = screen_height * 0.44;
 
         setLayout();
         this.model.addView(this);
@@ -45,7 +44,8 @@ public class ToolbarView extends GridPane implements IView {
     }
 
     private void setLayout(){
-        setStyle(bg_color);
+        //setStyle(bg_color);
+        setBackground(new Background(new BackgroundFill(Paint.valueOf("#66b2b2"), null, null)));
         setMinWidth(default_width);
         innerShadow = new InnerShadow();
         innerShadow.setColor(Color.RED);
@@ -54,6 +54,7 @@ public class ToolbarView extends GridPane implements IView {
         innerShadow.setWidth(20);
         innerShadow.setChoke(0.5);
         Label tools_label = new Label("Tools");
+        tools_label.setTextFill(Color.WHITE);
         tools_label.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         tools_label.setUnderline(true);
         //tools_label.setPadding(new Insets(5,0,0,0));
@@ -92,8 +93,8 @@ public class ToolbarView extends GridPane implements IView {
         setAlignment(Pos.TOP_CENTER);
 
 
-        setHgap(50);
-        setVgap(30);
+        setHgap(40);
+        setVgap(20);
         //setPadding(new Insets(0,0,0,5));
     }
 

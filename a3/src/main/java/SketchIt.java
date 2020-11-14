@@ -1,14 +1,9 @@
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
-import javax.tools.Tool;
-import java.awt.*;
 
 public class SketchIt extends Application {
 
@@ -45,7 +40,7 @@ public class SketchIt extends Application {
         gp.setVgrow(menu, Priority.ALWAYS);
 
         stage.setMinWidth(640);
-        stage.setMinHeight(670);
+        stage.setMinHeight(700);
 
 
         Scene scene = new Scene(main, screen_width, screen_height);

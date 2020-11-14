@@ -1,14 +1,10 @@
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.SnapshotParameters;
-import javafx.scene.control.*;
 import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -16,27 +12,15 @@ import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
-//import javafx.embed.swing.SwingFXUtils;
-//import javafx.embed.swing.SwingFXUtils;
-//import java.awt.*;
-import java.awt.*;
 import java.io.*;
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 
@@ -64,6 +48,7 @@ public class MenuView extends HBox implements IView {
     String DELIMITER = ",";
     File cur_file = null;
     Dialog save_prompt;
+    Dialog about_screen;
 
 
     public MenuView(Model model, double screen_width, double screen_height, Stage stage, CanvasView canvas){
@@ -83,8 +68,10 @@ public class MenuView extends HBox implements IView {
 
 
     private void setLayout(){
-        setStyle("-fx-background-color:beige;");
+        //setStyle("-fx-background-color:beige;");
+        setBackground(new Background(new BackgroundFill(Paint.valueOf("b2d8d8"), null, null)));
         setPrefSize(width,height);
+        //setBackground(new Background(new BackgroundFill(Paint.valueOf("E5FCC2"), null, null)));
 
         file = new Menu("File");
         new_file = new MenuItem("New File");
@@ -100,16 +87,15 @@ public class MenuView extends HBox implements IView {
         edit.getItems().addAll(copy, paste, cut);
 
         about = new Menu("About");
-        desc = new MenuItem("Name: Brandon Nguyen\nStudent ID: 2073309");
+        desc = new MenuItem("See Student Info");
         about.getItems().add(desc);
 
         filechooser = new FileChooser();
         filechooser.setTitle("Save");
 
         MenuBar menubar = new MenuBar(file, edit, about);
+        menubar.setBackground(new Background(new BackgroundFill(Paint.valueOf("b2d8d8"), null, null)));
 
-
-        //save_prompt.();
 
 
         getChildren().addAll(menubar);
@@ -121,6 +107,8 @@ public class MenuView extends HBox implements IView {
         BufferedWriter writer = null;
         try {
             FileChooser chooser = new FileChooser();
+            chooser.getExtensionFilters().add((new FileChooser.ExtensionFilter("SketchIt files (*.sketchit)", "*.sketchit")));
+            chooser.getExtensionFilters().add((new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt")));
             chooser.setTitle("Save File");
             if(cur_file != null){
                 chooser.setInitialFileName(cur_file.getName());
@@ -419,6 +407,13 @@ public class MenuView extends HBox implements IView {
 
             }
         });
+
+        desc.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                showAboutScreen();
+            }
+        });
     }
 
     private int promptSave(){
@@ -450,6 +445,14 @@ public class MenuView extends HBox implements IView {
         else{
             return -1; // SHOULD NEVER GET HERE
         }
+    }
+
+    private void showAboutScreen(){
+        about_screen = new Dialog();
+        about_screen.setContentText("SketchIt!\nName: Brandon Nguyen\nStudent ID: 2073309");
+        about_screen.getDialogPane().getButtonTypes().addAll(ButtonType.CLOSE);
+        about_screen.showAndWait();
+
     }
 
     @Override

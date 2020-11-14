@@ -10,9 +10,17 @@ All the the required features are implemented.
 Extra features implemented: Cut-Copy-Paste
 
 Some extra features I decided to implement:
+- You can use the fill tool to set the background colour of the canvas
+
 - By default when you draw a shape, it is drawn with a transparent fill and a black stroke. I added the
   options to fill the shape with the selected fill colour as it's being drawn. This is done by checking
-  the checkbox that says "Fill Shape When Drawn".
+  the checkbox that says "Fill Shape".
+
+- Additionally, if a shape is selected and you click the "Fill Shape" button, it will remove/add the fill
+  colour to the selected shape. This button will get disabled if the selected shape doesn't have a border
+  since removing the fill colour of a shape with no border will make the shape disappear. This was added to
+  simplify the process of removing the fill colour of the selected shape (instead of having to go into the
+  colour picker and choosing the Transparent colour).
 
 - There is an extra button in the "Line Thickness" section called "No Border" which allows you to draw
   a Rectangle or a Circle without the black border IF the fill colour is not transparent (it wouldn't
@@ -20,6 +28,7 @@ Some extra features I decided to implement:
   This button also allows you to remove the border on the selected shape.
   This button is disabled when the selected tool is a Line and when the selected shape has a transparent
   fill colour.
+  When "No Border" is selected, all of the line styles are disabled as well since there is no border to style.
 
 
 Sources for the images used:

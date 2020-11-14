@@ -1,20 +1,12 @@
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.EventHandler;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import javafx.stage.Screen;
-import org.w3c.dom.css.Rect;
-
-import java.awt.*;
 import java.util.ArrayList;
 
 public class Model {
@@ -60,6 +52,7 @@ public class Model {
         line_thickness = 3;
         line_style = -1;
         saved = true;
+        selected_shape = null;
         // line thickness and line style are set in PropertiesView
     }
 
@@ -114,7 +107,7 @@ public class Model {
                     eraseShape(s);
                 }
                 else if (selected_tool == Tool.FILL){
-                    fillShape(s);
+                    fillShape(s, fill_color);
                 }
             }
         });
@@ -158,6 +151,12 @@ public class Model {
     public void selectShape(Shape s){
         selected_shape = s;
         fill_color = (Color)s.getFill();
+        if(fill_color == null || fill_color.equals(Color.TRANSPARENT)){
+            fill_shape = false;
+        }
+        else{
+            fill_shape = true;
+        }
         if (s.getStrokeDashArray().size() > 0){
             line_style = s.getStrokeDashArray().get(0);
         }
@@ -188,9 +187,9 @@ public class Model {
         }
     }
 
-    public void fillShape(Shape s){
+    public void fillShape(Shape s, Color color){
         saved = false;
-        s.setFill(fill_color);
+        s.setFill(color);
     }
 
     public void setStrokeColor(Shape s){
@@ -231,6 +230,7 @@ public class Model {
         shapes.remove(selected_shape);
         canvas.getChildren().remove(selected_shape);
         selected_shape = null;
+        updatePropertiesView();
     }
 
     public void newFile(){
