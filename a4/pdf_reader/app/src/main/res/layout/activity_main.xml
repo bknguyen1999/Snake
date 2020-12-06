@@ -143,6 +143,16 @@
         >
 
 
+            <TextView
+                    android:id="@+id/pagenum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PAGENUM"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="20dp">
+
+            </TextView>
+
             <ImageButton
                     android:id="@+id/prev_page"
                     android:layout_width="wrap_content"
