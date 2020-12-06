@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements Serializable{
     static ImageButton prev_page;
     static ImageButton undo_button;
     static ImageButton redo_button;
+    static TextView page_num;
 
 
     static Model model;
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements Serializable{
         prev_page = findViewById(R.id.prev_page);
         undo_button = findViewById(R.id.undo);
         redo_button = findViewById(R.id.redo);
+        page_num = findViewById(R.id.pagenum);
         validateUndoRedoButtons();
 
 
@@ -200,10 +202,12 @@ public class MainActivity extends AppCompatActivity implements Serializable{
         Log.d(LOGNAME, "SHOWING PAGE "+ index);
         if (pdfRenderer.getPageCount() <= index) {
             model.cur_page = pdfRenderer.getPageCount() - 1;
+            page_num.setText("" + model.cur_page + "/" + pdfRenderer.getPageCount());
             return;
         }
         if(index < 0){
             model.cur_page = 0;
+            page_num.setText("" + model.cur_page + "/" + pdfRenderer.getPageCount());
             return;
         }
         // Close the current page before opening another one.
@@ -225,8 +229,9 @@ public class MainActivity extends AppCompatActivity implements Serializable{
         pageImage.setImage(bitmap);
         //pageImage.scale = 1f;
         //pageImage.setAdjustViewBounds(true);
-        validatePageButtons();
         model.cur_page = index;
+        page_num.setText("" + model.cur_page + "/" + pdfRenderer.getPageCount());
+        validatePageButtons();
 
         //Log.d(LOGNAME, "finished showing page");
     }
