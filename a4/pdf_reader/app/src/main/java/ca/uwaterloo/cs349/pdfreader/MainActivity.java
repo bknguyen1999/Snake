@@ -202,12 +202,12 @@ public class MainActivity extends AppCompatActivity implements Serializable{
         Log.d(LOGNAME, "SHOWING PAGE "+ index);
         if (pdfRenderer.getPageCount() <= index) {
             model.cur_page = pdfRenderer.getPageCount() - 1;
-            page_num.setText("" + model.cur_page + "/" + pdfRenderer.getPageCount());
+            page_num.setText("" + (model.cur_page+1) + "/" + pdfRenderer.getPageCount());
             return;
         }
         if(index < 0){
             model.cur_page = 0;
-            page_num.setText("" + model.cur_page + "/" + pdfRenderer.getPageCount());
+            page_num.setText("" + (model.cur_page+1) + "/" + pdfRenderer.getPageCount());
             return;
         }
         // Close the current page before opening another one.
