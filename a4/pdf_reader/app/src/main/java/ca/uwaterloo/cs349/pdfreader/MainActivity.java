@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements Serializable{
         //pageImage.scale = 1f;
         //pageImage.setAdjustViewBounds(true);
         model.cur_page = index;
-        page_num.setText("" + model.cur_page + "/" + pdfRenderer.getPageCount());
+        page_num.setText("" + (model.cur_page + 1) + "/" + pdfRenderer.getPageCount());
         validatePageButtons();
 
         //Log.d(LOGNAME, "finished showing page");
