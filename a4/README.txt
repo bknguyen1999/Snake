@@ -13,7 +13,8 @@ Technical Notes:
   Users should use this tool when panning and zooming
 - The undo and redo buttons can undo an unlimited number of actions
 - The undo and redo will bring you to the page where the action was undone/redone
-
+- Also, the app saves its data when the user switches activities and then restores the data when 
+  the user comes back to the app
 
 Links to pictures used:
 
