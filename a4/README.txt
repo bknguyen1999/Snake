@@ -1,6 +1,6 @@
 Brandon Nguyen
 20733209 bknguyen
-openjdk version "11.0.8" 2020-11-13
+openjdk version "11.0.8" 2020-12-07
 Android SDK 11
 macOS 10.15.6 (MacBook Pro 2017)
 
