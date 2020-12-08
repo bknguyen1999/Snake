@@ -1,6 +1,8 @@
 package ca.uwaterloo.cs349.pdfreader;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.pdf.PdfRenderer;
@@ -370,6 +372,18 @@ public class MainActivity extends AppCompatActivity implements Serializable{
         else{
             redo_button.setEnabled(true);
             redo_button.setClickable(true);
+        }
+    }
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if(newConfig.orientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE ||
+                newConfig.orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT ||
+                newConfig.orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE) {
+
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
     }
 

@@ -94,7 +94,7 @@ public class Model {
         //MainActivity.validateUndoRedoButtons();
     }
 
-    //@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+   // @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public Action undo(){
         Log.d(LOGNAME,"UNDO");
         if(!undo_stack.empty()) {
