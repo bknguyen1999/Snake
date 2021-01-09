@@ -1,9 +1,3 @@
-Brandon Nguyen
-20733209 bknguyen
-openjdk version "11.0.8" 2020-10-23
-macOS 10.15.6 (MacBook Pro 2017)
-
-
 This is my version of the Snake game!
 
 All controls and rules are as required via the assignment page.
